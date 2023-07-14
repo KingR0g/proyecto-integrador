@@ -5,18 +5,7 @@ import Nav from './components/NavBar/Nav.jsx';
 import axios from "axios"
 //aqui
 
-const example = {
-   id: 1,
-   name: 'Rick Sanchez',
-   status: 'Alive',
-   species: 'Human',
-   gender: 'Male',
-   origin: {
-      name: 'Earth (C-137)',
-      url: 'https://rickandmortyapi.com/api/location/1',
-   },
-   image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
-};
+
 
 function App() {
 
@@ -31,9 +20,17 @@ function onSearch(id) {
       if (data.name) {
          setCharacters((oldChars) => [...oldChars, data]);
       } else {
-         window.alert('¡No hay personajes con este ID!');
       }
-   });
+   })
+      .catch((err) => window.alert('¡No hay personajes con este ID!'));
+}
+
+function onClose(id) {
+   // elimina personajes de characters
+ //window.alert("onClose :)")
+      setCharacters(characters.filter(pj => {
+         return pj.id !== id
+      }))
 }
 
    const [characters, setCharacters] = useState([]);     // [{}]  ---> [{}, {}]                
@@ -41,9 +38,24 @@ function onSearch(id) {
    return (
       <div className={style.app}>
          <Nav onSearch={onSearch} />
-         <Cards characters={characters} />
+         <Cards characters={characters} onClose={onClose} />
       </div>
    );
 }
 
 export default App;
+
+
+
+// lo que tenemos con axios pero con fetch
+
+/* fetch(`https://rickandmortyapi.com/api/character/${id}`)
+.then(respuesta => respuesta.json())
+.then(({ respuestaJson }) => {
+   if (respuestaJson.data.name) {
+      setCharacters((oldChars) => [...oldChars, respuestaJson.data]);
+   } else {
+   }
+})
+   .catch((err) => window.alert('¡No hay personajes con este ID!'));
+ */

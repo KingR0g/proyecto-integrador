@@ -7,9 +7,10 @@ export default function Cards(props) {
          {props.characters.map((pj) => (
             <Card 
                key={pj.id}
+               id={pj.id}
                name={pj.name} 
                species={pj.species} 
-               onClose={() => window.alert("Emulacion")}
+               onClose={props.onClose}
                gender={pj.gender}
                status={pj.status}
                image={pj.image}
